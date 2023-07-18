@@ -15,9 +15,9 @@ def get_by_id(id: int, db: Session):
     return contact
 
 
-def create(request: schemas.Contact, db: Session):
+def create(request: schemas.Contact, db: Session, user_id: int):
     new_contact = models.Contact(name=request.name, surname=request.surname,
-                                 phone_number=request.phone_number, email=request.email, user_id=1)
+                                 phone_number=request.phone_number, email=request.email, user_id=user_id)
     db.add(new_contact)
     db.commit()
     db.refresh(new_contact)

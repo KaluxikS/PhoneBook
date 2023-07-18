@@ -6,7 +6,6 @@ from Database import database
 from repository import contact
 
 
-
 router = APIRouter(
     prefix='/contact',
     tags=['Contact']
@@ -27,8 +26,8 @@ def get_contact_by_id(id: int, db: Session = Depends(database.get_db),
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
 def add_contact(request: schemas.Contact, db: Session = Depends(database.get_db),
-                current_user: schemas.User = Depends(oaut2.get_current_user)):
-    return contact.create(request, db)
+                current_user: schemas.TokenData = Depends(oaut2.get_current_user)):
+    return contact.create(request, db, current_user.user_id)
 
 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)

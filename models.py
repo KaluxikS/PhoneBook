@@ -16,6 +16,7 @@ class Contact(Base):
     owner = relationship('User', back_populates='contacts')
 
 
+
 class User(Base):
     __tablename__ = 'User'
 
