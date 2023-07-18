@@ -1,15 +1,15 @@
 from sqlalchemy.orm import Session
 import models, schemas
 from fastapi import HTTPException, status
-from hashing import Hash
+from security.hashing import Hash
 
 
-def get_by_id(id: int, db: Session):
-    user = db.query(models.User).filter(models.User.id == id).first()
-    if not user:
+def get_users(db: Session):
+    users = db.query(models.User).all()
+    if not users:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'User with id {id} not found')
-    return user
+                            detail=f'There is no users')
+    return users
 
 
 def create(request: schemas.UserAdd, db: Session):
